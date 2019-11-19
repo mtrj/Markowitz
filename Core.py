@@ -68,8 +68,8 @@ class Markowitz:
         for i in range(len(RetornosAtivos)):
             MatrizRetornos.append(np.average(RetornosAtivos[i])*252)
         print(MatrizRetornos)
-        #RetornosTransp = Utilidades(MatrizRetornos).Transpose()
-        #return(np.matmul(Pesos,RetornosTransp))
+        RetornosTransp = Utilidades(MatrizRetornos).Transpose()
+        return(np.matmul(Pesos,[RetornosTransp]))
 #Para chegar na resposta:
 #
 #
