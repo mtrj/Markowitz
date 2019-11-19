@@ -44,7 +44,18 @@ class Correlacao:
             #print(Linha)
             MatrizCorrel.append(Linha)
         return(MatrizCorrel)
-
+    # Método de covar novo
+    def Matriz(self):
+        RetornosAtivos = self.RetornosAtivos
+        NAtivos = len(RetornosAtivos)
+        MatrizCorrel = []
+        for i in range(NAtivos):
+            Linha = []
+            for x in range(NAtivos):
+                Linha.append(np.cov(RetornosAtivos[i],RetornosAtivos[x])[0][0]*252)#sss.pearsonr(RetornosAtivos[i],RetornosAtivos[x])[0])
+            #print(Linha)
+            MatrizCorrel.append(Linha)
+        return(MatrizCorrel)
 class Utilidades:
     def __init__(self, Matriz=[]):
         self.Matriz = Matriz
