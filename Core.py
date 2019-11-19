@@ -89,13 +89,15 @@ class Markowitz:
         MatrizCorrelacao = Correlacao(RetornosAtivos).Matriz()
         return(np.sqrt(np.matmul(np.matmul(Pesos,MatrizCorrelacao),PesosTransp)[0]))
     
-    def PortfolioAleatorio(self, N):
+def PortfolioAleatorio(self, N):
+        DIo = 0.049
         RetornosAtivos = self.RetornosAtivos
         NAtivos = len(RetornosAtivos)
         MatrizResposta = []
-        FO = open(" CAMINHO DO SEU DESKTOP AQUI /TesteMarkowitzAleat.txt",'w+')
+        FO = open("C:/Users/mterocha/Desktop/TesteMarkowitzAleat.txt",'w+')
         VolArr = []
         RetArr = []
+        SharpeArr = []
         for x in range(N):
             Pesos = Utilidades().PesosAleatorios(NAtivos)
             ObjMarkowitz = Markowitz(RetornosAtivos, [Pesos])
@@ -104,6 +106,7 @@ class Markowitz:
             VolArr.append(VolPort)
             RetPort = ObjMarkowitz.ERetorno()
             RetArr.append(RetPort)
+            SharpeArr.append((RetPort - DIo)/VolPort)
             LinhaPesos = [Pesos[k] for k in range(len(Pesos))]
             LinhaRisco = [str(VolPort[0]) + '|' + str(RetPort[0])]
             MatrizResposta.append(str(LinhaPesos) + '|' + str(LinhaRisco))
@@ -112,8 +115,11 @@ class Markowitz:
             FO.write('\n')
         FO.close()
         plt.style.use('seaborn-whitegrid')
-        plt.plot(VolArr, RetArr, 'o', color='black')
-        plt.savefig(" CAMINHO DO SEU DESKTOP AQUI /MarkowitzTeste.png")
+        plt.xlabel('Volatilidade')
+        plt.ylabel('Retorno')
+        plt.scatter(VolArr, RetArr, c=SharpeArr, cmap='viridis')
+        plt.colorbar(label='Sharpe')
+        plt.savefig("C:/Users/mterocha/Desktop/MarkowitzTeste.png")
         #return(MatrizResposta)
 #Para chegar na resposta:
 #
