@@ -74,6 +74,23 @@ class Markowitz:
         print(MatrizRetornos)
         RetornosTransp = Utilidades(MatrizRetornos).Transpose()
         return(np.matmul(Pesos,[RetornosTransp]))
+    
+    def PortfolioAleatorio(self, N):
+        RetornosAtivos = self.RetornosAtivos
+        NAtivos = len(RetornosAtivos)
+        MatrizResposta = []
+        for i in range(N):
+            Pesos = Utilidades().PesosAleatorios(NAtivos)
+            ObjMarkowitz = Markowitz(RetornosAtivos, Pesos)
+            VarPort = ObjMarkowitz.Variancia()
+            VolPort = np.sqrt(VarPort)
+            RetPort = ObjMarkowitz.ERetorno()
+            for x in range(N):
+                Linha = []
+                for w in range(NAtivos+2):
+                    Linha.append(str(Pesos[k]) for k in range(len(Pesos)) + str(VolPort) + str(RetPort))
+                MatrizResposta.append(Linha)
+            return(MatrizResposta)
 #Para chegar na resposta:
 #
 #
