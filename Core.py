@@ -55,6 +55,13 @@ class Utilidades:
         for row in rez:
             MatrizTransposta.append(row)
         return(MatrizTransposta)
+    
+    def PesosAleatorios(self):
+        Matriz = self.Matriz
+        MatrizAleatoria = [np.random.rand() for x in range(len(Matriz))]
+        Soma = sum(MatrizAleatoria)
+        MatrizPesos = [MatrizAleatoria[x]/Soma for x in range(len(Matriz))]
+        return(MatrizPesos)
 
 class Markowitz:
     def __init__(self,RetornosAtivos,Pesos):
