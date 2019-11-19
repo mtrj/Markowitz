@@ -89,7 +89,7 @@ class Markowitz:
         MatrizCorrelacao = Correlacao(RetornosAtivos).Matriz()
         return(np.sqrt(np.matmul(np.matmul(Pesos,MatrizCorrelacao),PesosTransp)[0]))
     
-def PortfolioAleatorio(self, N):
+    def PortfolioAleatorio(self, N):
         DIo = 0.049
         RetornosAtivos = self.RetornosAtivos
         NAtivos = len(RetornosAtivos)
@@ -114,10 +114,15 @@ def PortfolioAleatorio(self, N):
             FO.write(str(MatrizResposta[y]))
             FO.write('\n')
         FO.close()
+        SharpeMax = max(SharpeArr)
+        SharpeMaxLoc = SharpeArr.index(SharpeMax)
+        VolSM = VolArr[SharpeMaxLoc]
+        RetSM = RetArr[SharpeMaxLoc]
         plt.style.use('seaborn-whitegrid')
         plt.xlabel('Volatilidade')
         plt.ylabel('Retorno')
         plt.scatter(VolArr, RetArr, c=SharpeArr, cmap='viridis')
+        plt.scatter(VolSM, RetSM,c='red', s=50)
         plt.colorbar(label='Sharpe')
         plt.savefig("C:/Users/mterocha/Desktop/MarkowitzTeste.png")
         #return(MatrizResposta)
