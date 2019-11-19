@@ -1,5 +1,6 @@
 import numpy as np
 import scipy.stats.stats as sss
+import matplotlib.pyplot as plt
 
 class Precos:
     def __init__(self,Precos):
@@ -71,34 +72,49 @@ class Markowitz:
         MatrizRetornos = []
         for i in range(len(RetornosAtivos)):
             MatrizRetornos.append(np.average(RetornosAtivos[i])*252)
-        print(MatrizRetornos)
-        RetornosTransp = Utilidades(MatrizRetornos).Transpose()
-        return(np.matmul(Pesos,[RetornosTransp]))
+        RetornosTransp = Utilidades([MatrizRetornos]).Transpose()
+        return(np.matmul(Pesos,RetornosTransp)[0])
+    
+    def Variancia(self):
+        RetornosAtivos = self.RetornosAtivos
+        Pesos = self.Pesos
+        MatrizCorrelacao = Correlacao(RetornosAtivos).Matriz()
+        PesosTransp = Utilidades(Pesos).Transpose()
+        return(np.matmul(np.matmul(Pesos,MatrizCorrelacao),PesosTransp)[0])
+    
+    def Volatilidade(self):
+        RetornosAtivos = self.RetornosAtivos
+        Pesos = self.Pesos
+        PesosTransp = Utilidades(Pesos).Transpose()
+        MatrizCorrelacao = Correlacao(RetornosAtivos).Matriz()
+        return(np.sqrt(np.matmul(np.matmul(Pesos,MatrizCorrelacao),PesosTransp)[0]))
     
     def PortfolioAleatorio(self, N):
         RetornosAtivos = self.RetornosAtivos
         NAtivos = len(RetornosAtivos)
         MatrizResposta = []
-        FO = open("C:/Users/mterocha/Desktop/TesteMarkowitzAleat.txt",'w+')
+        FO = open(" CAMINHO DO SEU DESKTOP AQUI /TesteMarkowitzAleat.txt",'w+')
+        VolArr = []
+        RetArr = []
         for x in range(N):
             Pesos = Utilidades().PesosAleatorios(NAtivos)
             ObjMarkowitz = Markowitz(RetornosAtivos, [Pesos])
             VarPort = ObjMarkowitz.Variancia()
             VolPort = np.sqrt(VarPort)
+            VolArr.append(VolPort)
             RetPort = ObjMarkowitz.ERetorno()
-            LinhaPesos = []
-            LinhaRisco = []
-            MatrizRisco = []
-            strRisco = str(VolPort[0]) + "|" + str(RetPort[0])
+            RetArr.append(RetPort)
             LinhaPesos = [Pesos[k] for k in range(len(Pesos))]
             LinhaRisco = [str(VolPort[0]) + '|' + str(RetPort[0])]
-            
             MatrizResposta.append(str(LinhaPesos) + '|' + str(LinhaRisco))
         for y in range(len(MatrizResposta)):
             FO.write(str(MatrizResposta[y]))
             FO.write('\n')
         FO.close()
-        return(MatrizResposta)
+        plt.style.use('seaborn-whitegrid')
+        plt.plot(VolArr, RetArr, 'o', color='black')
+        plt.savefig(" CAMINHO DO SEU DESKTOP AQUI /MarkowitzTeste.png")
+        #return(MatrizResposta)
 #Para chegar na resposta:
 #
 #
