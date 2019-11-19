@@ -75,22 +75,33 @@ class Markowitz:
         RetornosTransp = Utilidades(MatrizRetornos).Transpose()
         return(np.matmul(Pesos,[RetornosTransp]))
     
-    def PortfolioAleatorio(self, N):
+def PortfolioAleatorio(self, N):
         RetornosAtivos = self.RetornosAtivos
         NAtivos = len(RetornosAtivos)
         MatrizResposta = []
-        for i in range(N):
+        FO = open(" - - - - - - - - - Desktop/TesteMarkowitzAleat.txt",'w+')
+        for x in range(N):
             Pesos = Utilidades().PesosAleatorios(NAtivos)
-            ObjMarkowitz = Markowitz(RetornosAtivos, Pesos)
+            ObjMarkowitz = Markowitz(RetornosAtivos, [Pesos])
             VarPort = ObjMarkowitz.Variancia()
             VolPort = np.sqrt(VarPort)
             RetPort = ObjMarkowitz.ERetorno()
-            for x in range(N):
-                Linha = []
-                for w in range(NAtivos+2):
-                    Linha.append(str(Pesos[k]) for k in range(len(Pesos)) + str(VolPort) + str(RetPort))
-                MatrizResposta.append(Linha)
-            return(MatrizResposta)
+            LinhaPesos = []
+            LinhaRisco = []
+            strRisco = str(VolPort[0]) + "|" + str(RetPort[0])
+            for w in range(NAtivos+2):
+                #print(Pesos[k] for k in range(len(Pesos)))
+                LinhaPesos = [Pesos[k] for k in range(len(Pesos))] #+ str(VolPort[0]) + str(RetPort[0]))
+                #for k in range(len(Pesos)):
+                    #LinhaPesos[k] = str(LinhaPesos[k]) + strRisco
+            #LinhaRisco = [str(VolPort[0]) + str(RetPort[0])]
+            #print("Risco " + str(VolPort[0]) + "|" + str(RetPort[0]))
+            MatrizResposta.append(LinhaPesos)
+        for y in range(len(MatrizResposta)):
+            FO.write(str(MatrizResposta[y]))
+            FO.write('\n')
+        FO.close()
+        return(MatrizResposta)
 #Para chegar na resposta:
 #
 #
