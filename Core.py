@@ -45,22 +45,19 @@ class Correlacao:
         return(MatrizCorrel)
 
 class Utilidades:
-    def __init__(self, Matriz):
+    def __init__(self, Matriz=[]):
         self.Matriz = Matriz
     
     def Transpose(self):
-        MatrizTransposta = []
         Matriz = self.Matriz
-        rez = [[Matriz[j][i] for j in range(len(Matriz))] for i in range(len(Matriz[0]))] 
-        for row in rez:
-            MatrizTransposta.append(row)
+        mr = [[Matriz[j][i] for j in range(len(Matriz))] for i in range(len(Matriz[0]))] 
+        MatrizTransposta = [row for row in mr]
         return(MatrizTransposta)
     
-    def PesosAleatorios(self):
-        Matriz = self.Matriz
-        MatrizAleatoria = [np.random.rand() for x in range(len(Matriz))]
+    def PesosAleatorios(self, NAtivos):
+        MatrizAleatoria = [np.random.rand() for x in range(NAtivos)]
         Soma = sum(MatrizAleatoria)
-        MatrizPesos = [MatrizAleatoria[x]/Soma for x in range(len(Matriz))]
+        MatrizPesos = [MatrizAleatoria[x]/Soma for x in range(NAtivos)]
         return(MatrizPesos)
 
 class Markowitz:
