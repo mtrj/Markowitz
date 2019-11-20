@@ -113,7 +113,7 @@ class Markowitz:
         plt.style.use('seaborn-whitegrid')
         plt.xlabel('Volatilidade')
         plt.ylabel('Retorno')
-        grafico = plt.scatter(VolArr, RetArr, c=SharpeArr, cmap='viridis')
+        grafico = plt.scatter(VolArr, RetArr, c=SharpeArr, cmap='viridis') #ou trocar cmap='inferno'
         pontoverm = plt.scatter(VolSM, RetSM,c='red', s=50)
         plt.colorbar(grafico, label='Sharpe')
         plt.savefig("C:/Users/milto/Desktop/MarkowitzTeste.png")
