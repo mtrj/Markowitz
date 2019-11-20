@@ -141,7 +141,7 @@ class Markowitz:
         DIo = 0.049
         RetornosAtivos = self.RetornosAtivos
         NAtivos = len(RetornosAtivos)
-        MatrizResposta = []
+        #MatrizResposta = []
         FO = open("C:/Users/milto/Desktop/TesteMarkowitzAleat.txt",'w+')
         VolArr = []
         RetArr = []
@@ -155,12 +155,17 @@ class Markowitz:
             RetPort = ObjMarkowitz.ERetorno()
             RetArr.append(RetPort)
             SharpeArr.append((RetPort - DIo)/VolPort)
-            LinhaPesos = [Pesos[k] for k in range(len(Pesos))]
-            LinhaRisco = [str(VolPort[0]) + '|' + str(RetPort[0])]
-            MatrizResposta.append(str(LinhaPesos) + '|' + str(LinhaRisco))
-        for y in range(len(MatrizResposta)):
-            FO.write(str(MatrizResposta[y]))
+            for k in range(len(Pesos)):
+                FO.write(str(Pesos[k]) + '|')
+            FO.write(str(VolPort[0]) + '|' + str(RetPort[0]))
+            FO.write('|' + str(float(SharpeArr[x])))
             FO.write('\n')
+            #LinhaPesos = [Pesos[k] for k in range(len(Pesos))]
+            #LinhaRisco = [str(VolPort[0]) + '|' + str(RetPort[0])]
+            #MatrizResposta.append(str(LinhaPesos) + '|' + str(LinhaRisco))
+        #for y in range(len(MatrizResposta)):
+            #FO.write(str(MatrizResposta[y]))
+            #FO.write('\n')
         FO.close()
         SharpeMax = max(SharpeArr)
         SharpeMaxLoc = SharpeArr.index(SharpeMax)
@@ -173,7 +178,7 @@ class Markowitz:
         pontoverm = plt.scatter(VolSM, RetSM,c='red', s=50)
         plt.colorbar(grafico, label='Sharpe')
         plt.savefig("C:/Users/milto/Desktop/MarkowitzTeste.png")
-        #return(MatrizResposta)
+        print('O sharpe máximo é: ' + left(str(SharpeMax[0]),4) + '\n' + 'O retorno é: ' + left(str(RetSM[0]*100),4) + '%' + '\n' + 'A vol é: ' + left(str(VolSM[0]*100),4) + '%')
 #Para chegar na resposta:
 #
 #
