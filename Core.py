@@ -7,7 +7,8 @@ import getpass
 
 # Exemplo para rodar o Markowitz usando dados de 1y diários do yahoo:
 # Acoes = ['PETR4','VALE3','BRKM5','VVAR3','TIMP3','ABEV3']
-# Mark = Markowitz(BaixaAcao(Acoes).matrizretornos(),np.random.rand(len(Acoes)))
+# tenor = '2y' # ou seja, o modelo utilizará dados de 2 anos
+# Mark = Markowitz(BaixaAcao(Acoes,tenor).matrizretornos(),np.random.rand(len(Acoes)))
 # Neste caso baixamos 6 ações e as transformamos em um objeto da classe de Markowitz para que seja utilizado para qualquer fim,
 # os pesos são determinados por uma lista aleatória do numpy
 # Caso a simulação seja de fronteira eficiente:
