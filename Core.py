@@ -32,30 +32,11 @@ class Precos:
 class Correlacao:
     def __init__(self, RetornosAtivos):
         self.RetornosAtivos = RetornosAtivos
+
+    def Matriz(self):
+        RetornosAtivos = self.RetornosAtivos
+        return(np.cov(RetornosAtivos)*252)
         
-    def Matriz(self):
-        RetornosAtivos = self.RetornosAtivos
-        NAtivos = len(RetornosAtivos)
-        MatrizCorrel = []
-        for i in range(NAtivos):
-            Linha = []
-            for x in range(NAtivos):
-                Linha.append(sss.pearsonr(RetornosAtivos[i],RetornosAtivos[x])[0])
-            #print(Linha)
-            MatrizCorrel.append(Linha)
-        return(MatrizCorrel)
-    # Método de covar novo
-    def Matriz(self):
-        RetornosAtivos = self.RetornosAtivos
-        NAtivos = len(RetornosAtivos)
-        MatrizCorrel = []
-        for i in range(NAtivos):
-            Linha = []
-            for x in range(NAtivos):
-                Linha.append(np.cov(RetornosAtivos[i],RetornosAtivos[x])[0][0]*252)#sss.pearsonr(RetornosAtivos[i],RetornosAtivos[x])[0])
-            #print(Linha)
-            MatrizCorrel.append(Linha)
-        return(MatrizCorrel)
 class Utilidades:
     def __init__(self, Matriz=[]):
         self.Matriz = Matriz
@@ -105,7 +86,7 @@ class Markowitz:
         RetornosAtivos = self.RetornosAtivos
         NAtivos = len(RetornosAtivos)
         MatrizResposta = []
-        FO = open("C:/Users/mterocha/Desktop/TesteMarkowitzAleat.txt",'w+')
+        FO = open("C:/Users/milto/Desktop/TesteMarkowitzAleat.txt",'w+')
         VolArr = []
         RetArr = []
         SharpeArr = []
@@ -132,10 +113,10 @@ class Markowitz:
         plt.style.use('seaborn-whitegrid')
         plt.xlabel('Volatilidade')
         plt.ylabel('Retorno')
-        plt.scatter(VolArr, RetArr, c=SharpeArr, cmap='viridis')
-        plt.scatter(VolSM, RetSM,c='red', s=50)
-        plt.colorbar(label='Sharpe')
-        plt.savefig("C:/Users/mterocha/Desktop/MarkowitzTeste.png")
+        grafico = plt.scatter(VolArr, RetArr, c=SharpeArr, cmap='viridis')
+        pontoverm = plt.scatter(VolSM, RetSM,c='red', s=50)
+        plt.colorbar(grafico, label='Sharpe')
+        plt.savefig("C:/Users/milto/Desktop/MarkowitzTeste.png")
         #return(MatrizResposta)
 #Para chegar na resposta:
 #
