@@ -185,3 +185,12 @@ class Markowitz:
         print('Composição ideal da carteira:')
         for v in range(len(RetornosAtivos)):
             print(tickerarr[v] + ': ' + left(str(PesosArr[SharpeMaxLoc][v]*100),6) + '%')
+# Para projetar todas as carteiras possíveis em um array de ativos:
+#arr = [i for i in range(1,11,1)] #gera numeros de 1 a 10
+#r = 3 #numero de quebra de ativos por carteira
+#perm = permutations(arr, r) #gera o objeto a ser trabalhado
+#permarr = [] #inicia a matriz que irá armazenar os valores
+#for i in list(perm):
+#	permarr.append(i)
+
+#o resultado será uma matriz de m x n, onde n = r e m = n!/(n-r)!
