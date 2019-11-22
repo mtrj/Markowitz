@@ -204,7 +204,7 @@ class Markowitz:
                 carteira.append(tickerarr[numero])
             carteiraarr.append(carteira)
         return(carteiraarr)
-
+# http://wilsonfreitas.github.io/posts/expectativas-do-copom-nos-contratos-de-di1.html
 # Para projetar todas as carteiras possíveis em um array de ativos:
 # from itertools import combinations
 #arr = [i for i in range(10)] #gera numeros de 0 a 9 (10 ativos)
