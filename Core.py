@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 from bs4 import BeautifulSoup
 import requests as requests
 import getpass
+from itertools import combinations
 
 # Exemplo para rodar o Markowitz usando dados de 1y diários do yahoo:
 # Acoes = ['PETR4','VALE3','BRKM5','VVAR3','TIMP3','ABEV3']
