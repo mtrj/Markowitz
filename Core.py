@@ -185,6 +185,24 @@ class Markowitz:
         print('Composição ideal da carteira:')
         for v in range(len(RetornosAtivos)):
             print(tickerarr[v] + ': ' + left(str(PesosArr[SharpeMaxLoc][v]*100),6) + '%')
+            
+    def CarteirasOtimas(self,AtivosCarteira, N, tickerarr):
+        Nativos = len(tickerarr)
+        arr = [i for i in range(Nativos)]
+        r = AtivosCarteira
+        comb = combinations(arr,r)
+        combarr = []
+        carteiraarr = []
+        for w in list(comb):
+            combarr.append(w)
+            
+        for i in range(len(combarr)):
+            carteira = []
+            for x in range(len(combarr[i])):
+                numero = combarr[i][x]
+                carteira.append(tickerarr[numero])
+            carteiraarr.append(carteira)
+        return(carteiraarr)
 
 # Para projetar todas as carteiras possíveis em um array de ativos:
 # from itertools import combinations
