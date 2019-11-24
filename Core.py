@@ -150,7 +150,7 @@ class Markowitz:
         RetornosAtivos = self.RetornosAtivos
         NAtivos = len(RetornosAtivos)
         #MatrizResposta = []
-        FO = open("C:/Users/" + getpass.getuser() + "/Desktop/TesteMarkowitzAleat.txt",'w+')
+        FO = open("C:/Users/" + getpass.getuser() + "/Desktop/Markowitz/Markowitz" + str(tickerarr) + ".txt",'w+')
         PesosArr =[]
         VolArr = []
         RetArr = []
@@ -175,35 +175,47 @@ class Markowitz:
         SharpeMaxLoc = SharpeArr.index(SharpeMax)
         VolSM = VolArr[SharpeMaxLoc]
         RetSM = RetArr[SharpeMaxLoc]
+        plt.clf()
         plt.style.use('seaborn-whitegrid')
         plt.xlabel('Volatilidade')
         plt.ylabel('Retorno')
         grafico = plt.scatter(VolArr, RetArr, c=SharpeArr, cmap='inferno')
         pontoverm = plt.scatter(VolSM, RetSM,c='red', s=50)
         plt.colorbar(grafico, label='Sharpe')
-        plt.savefig("C:/Users/" + getpass.getuser() + "/Desktop/MarkowitzTeste.png")
-        print('O sharpe máximo é: ' + left(str(SharpeMax[0]),4) + '\n' + 'O retorno é: ' + left(str(RetSM[0]*100),4) + '%' + '\n' + 'A vol é: ' + left(str(VolSM[0]*100),4) + '%' + '\n')
-        print('Composição ideal da carteira:')
-        for v in range(len(RetornosAtivos)):
-            print(tickerarr[v] + ': ' + left(str(PesosArr[SharpeMaxLoc][v]*100),6) + '%')
+        plt.savefig("C:/Users/" + getpass.getuser() + "/Desktop/Markowitz/Markowitz" + str(tickerarr) + ".png")
+        #print('O sharpe máximo é: ' + left(str(SharpeMax[0]),4) + '\n' + 'O retorno é: ' + left(str(RetSM[0]*100),4) + '%' + '\n' + 'A vol é: ' + left(str(VolSM[0]*100),4) + '%' + '\n')
+        #print('Composição ideal da carteira:')
+        #for v in range(len(RetornosAtivos)):
+            #print(tickerarr[v] + ': ' + left(str(PesosArr[SharpeMaxLoc][v]*100),6) + '%')
+        return([SharpeMax[0],RetSM[0],VolSM[0],PesosArr[SharpeMaxLoc]])
             
     def CarteirasOtimas(self,AtivosCarteira, N, tickerarr):
         Nativos = len(tickerarr)
+        pesosaleat = np.random.rand(Nativos)
         arr = [i for i in range(Nativos)]
         r = AtivosCarteira
         comb = combinations(arr,r)
         combarr = []
         carteiraarr = []
+        resposta =[]
+        ResultArr = []
+        sharpearr = []
         for w in list(comb):
             combarr.append(w)
-            
         for i in range(len(combarr)):
             carteira = []
             for x in range(len(combarr[i])):
                 numero = combarr[i][x]
                 carteira.append(tickerarr[numero])
             carteiraarr.append(carteira)
-        return(carteiraarr)
+        for z in range(len(carteiraarr)):
+            RetornosAtivos = BaixaAcao(carteiraarr[z],'2y').matrizretornos()
+            ResultArr.append(Markowitz(RetornosAtivos, pesosaleat).PortfolioAleatorio(N, carteiraarr[z]))
+            resposta.append([carteiraarr[z],ResultArr[z]])
+            sharpearr.append(ResultArr[z][0])
+        MaxSharpe = max(sharpearr)
+        MaxSharpeLoc = sharpearr.index(MaxSharpe)
+        return(resposta[MaxSharpeLoc])
 # http://wilsonfreitas.github.io/posts/expectativas-do-copom-nos-contratos-de-di1.html
 # Para projetar todas as carteiras possíveis em um array de ativos:
 # from itertools import combinations
