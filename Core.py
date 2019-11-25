@@ -96,7 +96,18 @@ class Precos:
 class Correlacao:
     def __init__(self, RetornosAtivos):
         self.RetornosAtivos = RetornosAtivos
-
+    #def Matriz(self):
+    #    RetornosAtivos = self.RetornosAtivos
+    #    NAtivos = len(RetornosAtivos)
+    #    MatrizCorrel = []
+    #    for i in range(NAtivos):
+    #        Linha = []
+    #        for x in range(NAtivos):
+    #            Linha.append(sss.pearsonr(RetornosAtivos[i],RetornosAtivos[x])[0])#sss.pearsonr(RetornosAtivos[i],RetornosAtivos[x])[0])
+            #print(Linha)
+    #        MatrizCorrel.append(Linha)
+    #    return(MatrizCorrel)
+    
     def Matriz(self):
         RetornosAtivos = self.RetornosAtivos
         return(np.cov(RetornosAtivos)*252)
