@@ -149,6 +149,20 @@ class Markowitz:
         PesosTransp = Utilidades(Pesos).Transpose()
         return(np.matmul(np.matmul(Pesos,MatrizCorrelacao),PesosTransp)[0])
     
+    def Variancia2(self):
+        RetornosAtivos = self.RetornosAtivos
+        Pesos = self.Pesos
+        var = [np.std(RetornosAtivos[x], ddof=1, dtype=np.float64)**2 for x in range(len(RetornosAtivos))]
+        pr = 0
+        sr = 0
+        for i in range(len(var)):
+            pr += var[i]*(Pesos[i]**2)
+        for i in range(len(var)):
+            for k in range(len(var)):
+                if i!=k:
+                    sr += Pesos[i]*Pesos[k]*np.sqrt(var[i])*np.sqrt(var[k])*sss.pearsonr(RetornosAtivos[i],RetornosAtivos[k])[0]
+        return(pr+sr)
+    
     def Volatilidade(self):
         RetornosAtivos = self.RetornosAtivos
         Pesos = self.Pesos
