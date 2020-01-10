@@ -1,3 +1,10 @@
+# Exemplo para rodar o código:
+# tickers = ['goll4.sa','irbr3.sa','b3sa3.sa','rent3.sa','jbss3.sa']
+# ra = dados_acoes(tickers).retornos_multiplos()
+# Puxa os retornos dos tickers presentes no vetor durante o período de 2 anos (padrão)
+# markowitz(ra5).portfolios_aleatorios(10000,tickers)
+# gera 10k de portfólios aleatórios dando de resposta a combinação de maior sharpe com o peso de cada ativo
+
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
