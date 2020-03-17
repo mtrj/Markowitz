@@ -30,9 +30,12 @@ class yahoo:
         return erros
     
     def _get_df(self,ticker):
-        return pd.read_csv(filepath_or_buffer=(self.path + ticker.upper() + '.csv'),sep=',',index_col=0).dropna()
+        return pd.read_csv(filepath_or_buffer=(self.path + ticker.upper() + '.csv'),sep=',',index_col=0,parse_dates=True).dropna()
         
     def _consolidate_dfs(self, column='Adj Close'):
+        """
+        Retorna uma matriz com todos os tickers presentes no arquivo base, 532 líquidos
+        """
         dados_original = self._get_df(self.tickers[0])[column]
         df_consolidado = pd.DataFrame(data=list(dados_original.values),columns={self.tickers[0].upper()}).set_index(dados_original.index)
         for i in trange(1,self.n_ativos):
@@ -42,10 +45,10 @@ class yahoo:
         return df_consolidado
         
     def _all_tickers(self,file='tickers_liquidos.txt'):
+        """
+        Retorna uma matriz com todos os tickers presentes no arquivo base, 532 líquidos
+        """
         f = open(file,'r')
         ativos = [line.replace('\n','') for line in f.readlines()]
         f.close()
         return ativos
-    
-tickers = ['petr4','vale3','btow3','vvar3']
-df_teste = yahoo(tickers)._consolidate_dfs()
