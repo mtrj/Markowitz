@@ -36,11 +36,7 @@ class StockData:
             dtf2 = pd.DataFrame({ticker:self._complete_data[ticker][column]})
             dtf = pd.concat([dtf,dtf2],axis=1)
         return dtf
-    
-    #def _all_tickers(self):
-        
-    
-    
+   
 class Markowitz:
     """Classe para cálculo de portifólios ótimo"""
     def __init__(self, quotes,n_port=10000):
